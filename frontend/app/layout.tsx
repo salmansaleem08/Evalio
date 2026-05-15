@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Manrope } from "next/font/google";
 
+import { ThemeProvider } from "@/components/providers/theme-provider";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -27,9 +28,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${manrope.variable} ${jetbrainsMono.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

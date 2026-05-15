@@ -123,3 +123,9 @@
     outline: none;
   }
 }
+
+@layer utilities {
+  .text-gradient-primary {
+    @apply bg-gradient-to-br from-primary via-[#00d4aa] to-secondary bg-clip-text text-transparent;
+  }
+}
