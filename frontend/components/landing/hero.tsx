@@ -20,7 +20,7 @@ export function Hero() {
         <Logo size="lg" className="mb-10 flex-col gap-3 sm:flex-row" />
 
         <span className="mb-6 inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-foreground dark:border-primary/30 dark:bg-primary/10">
-          Exam marking, reimagined for schools
+          Exam marking for schools, colleges, and universities
         </span>
 
         <GradientHeading className="max-w-4xl text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
@@ -44,7 +44,7 @@ export function Hero() {
           transition={{ duration: 0.55, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
           className="mt-11 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
-          <Link href="/signup">
+          <Link href="#waitlist">
             <Button size="lg" className="h-11 gap-2 px-8 shadow-sm">
               Request pilot access
               <ArrowRight className="size-4" />

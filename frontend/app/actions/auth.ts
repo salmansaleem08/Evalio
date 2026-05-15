@@ -76,7 +76,7 @@ export async function signInAction(
     return { error: error.message };
   }
 
-  redirect("/");
+  redirect("/dashboard");
 }
 
 export async function signOutAction() {

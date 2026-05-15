@@ -29,11 +29,11 @@ export function Waitlist() {
             as="h2"
             className="mt-3 text-3xl font-bold tracking-tight"
           >
-            Request school access
+            Request pilot access
           </GradientHeading>
           <p className="mt-4 text-muted-foreground">
-            Not on the pilot list yet? Share your details and our team will reach
-            out when a place opens.
+            Schools, colleges, and universities: share your details and we will
+            email you when a pilot place opens.
           </p>
         </div>
 

@@ -27,7 +27,7 @@ export async function submitWaitlistAction(
     email,
     school,
     name: name || undefined,
-    source: "waitlist",
+    source: "waitlist" as const,
   });
 
   if (!result.ok) {

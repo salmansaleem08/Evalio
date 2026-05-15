@@ -13,7 +13,12 @@ export async function notifySchoolInquiry(
     process.env.CONTACT_NOTIFY_EMAIL ?? "msalmansaleem08@gmail.com";
   const apiKey = process.env.RESEND_API_KEY;
 
-  const subject = `New school inquiry: ${payload.school}`;
+  const subject =
+    payload.source === "waitlist"
+      ? `Pilot access request: ${payload.school}`
+      : payload.source === "signup"
+        ? `New pilot sign-up: ${payload.email}`
+        : `New institution inquiry: ${payload.school}`;
   const html = `
     <h2>New inquiry from Evalio</h2>
     <p><strong>School:</strong> ${escapeHtml(payload.school)}</p>

@@ -25,7 +25,7 @@ const pillars = [
     icon: Users,
     title: "Who we serve",
     description:
-      "Secondary schools, colleges, and tutoring centres that run formal assessments and need fair, fast grading their teams can trust.",
+      "Schools, colleges, universities, and tutoring centres that run formal assessments and need fair, fast grading their teams can trust.",
   },
 ];
 

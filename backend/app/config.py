@@ -1,3 +1,4 @@
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -11,11 +12,11 @@ class Settings(BaseSettings):
     backend_port: int = 8000
     cors_origins: str = "http://localhost:3000"
     gemini_api_key: str = ""
-    next_public_supabase_url: str = ""
-    supabase_service_role_key: str = ""
+    next_public_supabase_url: str = Field(default="", validation_alias="NEXT_PUBLIC_SUPABASE_URL")
+    supabase_anon_key: str = Field(default="", validation_alias="NEXT_PUBLIC_SUPABASE_ANON_KEY")
+    supabase_service_role_key: str = Field(default="", validation_alias="SUPABASE_SERVICE_ROLE_KEY")
     max_student_sheets: int = 5
     max_upload_size_mb: int = 25
-    pilot_allowed_emails: str = ""
 
     @property
     def supabase_url(self) -> str:

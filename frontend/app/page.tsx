@@ -1,5 +1,6 @@
 import { PageAtmosphere } from "@/components/landing/page-atmosphere";
 import { CtaSection } from "@/components/landing/cta-section";
+import { ImpactChart } from "@/components/landing/impact-chart";
 import { Footer } from "@/components/landing/footer";
 import { Hero } from "@/components/landing/hero";
 import { HowItWorks } from "@/components/landing/how-it-works";
@@ -18,6 +19,7 @@ export default function Home() {
         <Hero />
         <StatsBar />
         <Mission />
+        <ImpactChart />
         <HowItWorks />
         <Plans />
         <Waitlist />
