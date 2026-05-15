@@ -6,23 +6,23 @@ const steps = [
   {
     step: "01",
     icon: FileUp,
-    title: "Upload papers",
+    title: "Upload student work",
     description:
-      "Add up to five scanned student answer sheets — PDF or image — plus your marking scheme (model answers).",
+      "Add scanned or photographed answer sheets alongside your completed marking guide.",
   },
   {
     step: "02",
     icon: Sparkles,
-    title: "AI reads & compares",
+    title: "Every answer is reviewed",
     description:
-      "Our system extracts every answer, matches it to your scheme, and applies consistent criteria across all students.",
+      "Each response is read and matched against your marking guide with the same criteria for every student.",
   },
   {
     step: "03",
     icon: FileCheck,
-    title: "Review results",
+    title: "Receive marks and feedback",
     description:
-      "Get per-question marks, totals, and written feedback for each student — ready to export or adjust.",
+      "Review per-question scores, totals, and written comments you can share or adjust before returning papers.",
   },
 ];
 
@@ -32,17 +32,17 @@ export function HowItWorks() {
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-medium uppercase tracking-widest text-primary">
-            Simple workflow
+            How it works
           </p>
           <GradientHeading
             as="h2"
             className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl"
           >
-            Three steps from stack to scored
+            From paper stack to marked class
           </GradientHeading>
           <p className="mt-4 text-muted-foreground">
-            Teacher uploads papers and answer key → system grades everything →
-            teacher gets results.
+            A simple flow designed around how schools already run exams: upload,
+            grade, and return work with confidence.
           </p>
         </div>
 
@@ -50,13 +50,15 @@ export function HowItWorks() {
           {steps.map((item) => (
             <li
               key={item.step}
-              className="relative rounded-xl border bg-card p-8 shadow-sm transition-shadow hover:shadow-md"
+              className="relative rounded-xl border border-border/80 bg-card/80 p-8 shadow-sm backdrop-blur-sm transition-shadow hover:shadow-md"
             >
-              <span className="text-5xl font-bold text-primary/15">
+              <span className="text-5xl font-bold text-primary/20">
                 {item.step}
               </span>
               <item.icon className="mt-4 size-8 text-primary" />
-              <h3 className="mt-4 text-xl font-semibold">{item.title}</h3>
+              <h3 className="mt-4 text-xl font-semibold text-foreground">
+                {item.title}
+              </h3>
               <p className="mt-2 leading-relaxed text-muted-foreground">
                 {item.description}
               </p>

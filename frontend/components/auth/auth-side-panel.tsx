@@ -1,11 +1,13 @@
 import { CheckCircle2 } from "lucide-react";
 
+import { Logo } from "@/components/logo";
+
 const highlights = [
-  "Upload up to 5 student answer sheets per session",
-  "Add your marking scheme — PDF, scan, or typed",
-  "AI reads every answer and compares to your model",
-  "Per-question marks and feedback in minutes",
-  "Built for teachers drowning in exam cycles",
+  "Upload student answer sheets and your marking guide",
+  "Every response reviewed against your model answers",
+  "Clear marks and comments for each question",
+  "Built for teachers facing full exam seasons",
+  "More time for teaching, less time at the kitchen table",
 ];
 
 export function AuthSidePanel() {
@@ -20,6 +22,7 @@ export function AuthSidePanel() {
         aria-hidden
       />
       <div className="relative z-10 space-y-8">
+        <Logo showWordmark={false} size="md" className="pointer-events-none" />
         <p className="text-sm font-medium uppercase tracking-widest text-primary">
           Evalio
         </p>
@@ -27,9 +30,9 @@ export function AuthSidePanel() {
           Give teachers their weekends back
         </h2>
         <p className="max-w-md text-base text-secondary-foreground/80">
-          Every exam cycle, educators spend weeks manually checking hundreds of
-          papers. Evalio automates reading, comparison, and grading — so you
-          focus on teaching, not marking.
+          Every exam cycle, educators spend weeks checking hundreds of papers by
+          hand. Evalio helps schools mark faster and more consistently, so staff
+          can focus on teaching.
         </p>
         <ul className="space-y-4">
           {highlights.map((line) => (
@@ -41,7 +44,7 @@ export function AuthSidePanel() {
         </ul>
       </div>
       <p className="relative z-10 text-xs text-secondary-foreground/50">
-        Pilot program · Invited institutions only
+        Pilot program. Invited institutions only.
       </p>
     </aside>
   );

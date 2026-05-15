@@ -15,9 +15,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Evalio — AI Exam Paper Checking",
+  title: "Evalio | Exam Paper Checking for Schools",
   description:
-    "Automate grading for teachers and schools. Upload answer sheets and marking schemes, get detailed marks and feedback in minutes.",
+    "Help teachers mark exams faster with clear scores and feedback. Built for schools that want fair grading without losing weeks every season.",
 };
 
 export default function RootLayout({

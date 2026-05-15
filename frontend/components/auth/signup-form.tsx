@@ -21,8 +21,7 @@ export function SignupForm() {
       <header className="space-y-2">
         <h1 className="text-2xl font-bold tracking-tight">Create your account</h1>
         <p className="text-muted-foreground">
-          Email sign-up only — no verification step. Pilot access for invited
-          schools.
+          Sign up with your school email. Pilot access for invited schools only.
         </p>
       </header>
 
@@ -74,6 +73,14 @@ export function SignupForm() {
         <Link href="/login" className="text-primary hover:underline">
           Sign in
         </Link>
+      </p>
+
+      <p className="text-center text-xs text-muted-foreground">
+        By signing up you agree to our{" "}
+        <Link href="/privacy" className="text-primary hover:underline">
+          Privacy Policy
+        </Link>
+        .
       </p>
     </form>
   );

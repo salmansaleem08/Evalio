@@ -14,45 +14,45 @@ import {
 
 const phases = [
   {
-    name: "Now — Pilot",
+    name: "Pilot",
     tag: "Current",
     description:
-      "Invite-only access for partner schools. Core upload-and-grade flow with up to 5 papers per run.",
+      "Invite-only access for partner schools. Experience the core grading flow with a focused, hands-on rollout.",
     features: [
-      "Email sign-up for invited teachers",
-      "PDF & image answer sheets",
-      "Marking scheme upload",
-      "Per-question marks & feedback",
+      "Up to 5 student scripts per grading session",
+      "Email access for invited teachers",
+      "Upload marking guides and answer sheets",
+      "Per-question marks and written feedback",
     ],
     cta: "Join pilot",
     href: "/signup",
     highlighted: true,
   },
   {
-    name: "Next — Schools",
+    name: "Schools",
     tag: "Coming",
     description:
-      "Institution accounts, batch processing, and admin dashboards for heads of department.",
+      "Institution accounts, batch processing, and leadership dashboards for departments and principals.",
     features: [
       "Whole-class uploads",
-      "Shared marking schemes",
-      "Export to spreadsheets",
-      "Usage analytics",
+      "Shared marking guides across teams",
+      "Export results for records",
+      "Visibility for school leaders",
     ],
     cta: "Request access",
     href: "#waitlist",
     highlighted: false,
   },
   {
-    name: "Future — Platform",
+    name: "Platform",
     tag: "Vision",
     description:
-      "Full assessment lifecycle: item banks, moderation, parent reports, and LMS integrations.",
+      "The full assessment journey: item banks, moderation workflows, parent summaries, and deeper school-wide reporting.",
     features: [
-      "Custom rubrics",
-      "Blind double-marking aids",
-      "API for SIS systems",
-      "Multi-language papers",
+      "Custom rubrics and schemes",
+      "Moderation and quality checks",
+      "Parent-friendly summaries",
+      "Fits alongside your school systems",
     ],
     cta: "Stay updated",
     href: "#waitlist",
@@ -62,7 +62,7 @@ const phases = [
 
 export function Plans() {
   return (
-    <section id="roadmap" className="border-t bg-muted/30 px-6 py-20 md:py-28">
+    <section id="roadmap" className="relative px-6 py-20 md:py-28">
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-medium uppercase tracking-widest text-primary">
@@ -75,8 +75,8 @@ export function Plans() {
             Where we are headed
           </GradientHeading>
           <p className="mt-4 text-muted-foreground">
-            We are shipping fast with schools in the loop — starting with a focused
-            pilot, then scaling what teachers actually need.
+            We are building alongside schools, starting with a focused pilot and
+            expanding based on what teachers and leaders ask for most.
           </p>
         </div>
 
@@ -86,8 +86,8 @@ export function Plans() {
               key={phase.name}
               className={
                 phase.highlighted
-                  ? "border-primary/40 shadow-md ring-1 ring-primary/20"
-                  : ""
+                  ? "border-primary/40 bg-card/90 shadow-md ring-1 ring-primary/20 backdrop-blur-sm"
+                  : "border-border/80 bg-card/80 backdrop-blur-sm"
               }
             >
               <CardHeader>
@@ -102,7 +102,7 @@ export function Plans() {
               <CardContent>
                 <ul className="space-y-3">
                   {phase.features.map((f) => (
-                    <li key={f} className="flex gap-2 text-sm">
+                    <li key={f} className="flex gap-2 text-sm text-foreground">
                       <Check className="mt-0.5 size-4 shrink-0 text-primary" />
                       <span>{f}</span>
                     </li>

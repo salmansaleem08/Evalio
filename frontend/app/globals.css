@@ -129,3 +129,7 @@
     @apply bg-gradient-to-br from-primary via-[#00d4aa] to-secondary bg-clip-text text-transparent;
   }
 }
+
+.dark .text-gradient-primary {
+  @apply from-[#2ee6a8] via-[#5ef0c4] to-[#9ec9ff];
+}

@@ -1,32 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState } from "react";
 import { Loader2 } from "lucide-react";
 
+import { submitWaitlistAction, type WaitlistState } from "@/app/actions/waitlist";
 import { GradientHeading } from "@/components/gradient-heading";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+const initialState: WaitlistState = {};
+
 export function Waitlist() {
-  const [email, setEmail] = useState("");
-  const [school, setSchool] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">(
-    "idle",
+  const [state, formAction, pending] = useActionState(
+    submitWaitlistAction,
+    initialState,
   );
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setStatus("loading");
-    await new Promise((r) => setTimeout(r, 600));
-    setStatus("done");
-    setEmail("");
-    setSchool("");
-  }
-
   return (
-    <section id="waitlist" className="border-t px-6 py-20 md:py-28">
+    <section id="waitlist" className="border-t border-border/60 px-6 py-20 md:py-28">
       <div className="mx-auto max-w-xl">
         <div className="text-center">
           <p className="text-sm font-medium uppercase tracking-widest text-primary">
@@ -39,58 +32,64 @@ export function Waitlist() {
             Request school access
           </GradientHeading>
           <p className="mt-4 text-muted-foreground">
-            Not on the pilot list yet? Leave your details and we will reach out
-            when a slot opens.
+            Not on the pilot list yet? Share your details and our team will reach
+            out when a place opens.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-10 flex flex-col gap-5">
-          {status === "done" && (
+        <form action={formAction} className="mt-10 flex flex-col gap-5">
+          {state.success && (
             <Alert variant="success">
-              <AlertDescription>
-                Thank you — we have received your request and will be in touch.
-              </AlertDescription>
+              <AlertDescription>{state.success}</AlertDescription>
             </Alert>
           )}
-          {status === "error" && (
+          {state.error && (
             <Alert variant="destructive">
-              <AlertDescription>Something went wrong. Please try again.</AlertDescription>
+              <AlertDescription>{state.error}</AlertDescription>
             </Alert>
           )}
 
-          <fieldset className="space-y-2" disabled={status === "loading"}>
-            <Label htmlFor="waitlist-email">Work email</Label>
+          <fieldset className="space-y-2" disabled={pending}>
+            <Label htmlFor="waitlist-name">Your name</Label>
             <Input
-              id="waitlist-email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@yourschool.edu"
-              required
+              id="waitlist-name"
+              name="name"
+              placeholder="Sarah Ahmed"
               className="h-11 text-base md:text-base"
             />
           </fieldset>
 
-          <fieldset className="space-y-2" disabled={status === "loading"}>
-            <Label htmlFor="waitlist-school">School / institution</Label>
+          <fieldset className="space-y-2" disabled={pending}>
+            <Label htmlFor="waitlist-school">School or institution</Label>
             <Input
               id="waitlist-school"
-              value={school}
-              onChange={(e) => setSchool(e.target.value)}
+              name="school"
               placeholder="Springfield Academy"
               required
               className="h-11 text-base md:text-base"
             />
           </fieldset>
 
-          <Button type="submit" className="h-11 w-full" disabled={status === "loading"}>
-            {status === "loading" ? (
+          <fieldset className="space-y-2" disabled={pending}>
+            <Label htmlFor="waitlist-email">Work email</Label>
+            <Input
+              id="waitlist-email"
+              name="email"
+              type="email"
+              placeholder="admin@yourschool.edu"
+              required
+              className="h-11 text-base md:text-base"
+            />
+          </fieldset>
+
+          <Button type="submit" className="h-11 w-full" disabled={pending}>
+            {pending ? (
               <>
                 <Loader2 className="size-4 animate-spin" />
-                Submitting…
+                Sending…
               </>
             ) : (
-              "Join waitlist"
+              "Submit request"
             )}
           </Button>
         </form>
