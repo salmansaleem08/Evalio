@@ -14,8 +14,7 @@ export function GradientHeading({
   return (
     <Tag
       className={cn(
-        "bg-gradient-to-br from-primary via-[#00c896] to-secondary bg-clip-text text-transparent",
-        "dark:from-[#2ee6a8] dark:via-[#5ef0c4] dark:to-[#8ec5ff]",
+        "gradient-heading bg-clip-text text-transparent",
         className,
       )}
     >

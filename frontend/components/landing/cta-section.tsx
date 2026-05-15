@@ -24,7 +24,7 @@ export function CtaSection() {
         <div className="relative z-10">
           <GradientHeading
             as="h2"
-            className="text-3xl font-bold tracking-tight sm:text-4xl dark:from-white dark:via-[#b8ffe8] dark:to-[#7ee8c8]"
+            className="gradient-heading-on-dark text-3xl font-bold tracking-tight sm:text-4xl"
           >
             Ready to reclaim your exam season?
           </GradientHeading>
