@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 
 import { isPilotEmail } from "@/lib/auth/pilot";
+import { notifySchoolInquiry } from "@/lib/email/notify";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 export type AuthActionState = {
@@ -44,6 +45,12 @@ export async function signUpAction(
   if (error) {
     return { error: error.message };
   }
+
+  await notifySchoolInquiry({
+    email,
+    school: "New pilot sign-up",
+    source: "signup",
+  }).catch(() => undefined);
 
   redirect("/login?registered=1");
 }
