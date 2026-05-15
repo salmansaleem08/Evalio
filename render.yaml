@@ -18,5 +18,9 @@ services:
         sync: false
       - key: CORS_ORIGINS
         sync: false
+      - key: NEXT_PUBLIC_APP_URL
+        sync: false
+      - key: CORS_ALLOW_VERCEL_PREVIEWS
+        value: "true"
       - key: MAX_STUDENT_SHEETS
         value: "5"

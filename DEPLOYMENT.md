@@ -23,8 +23,12 @@ Create a **Web Service** from this repo, root directory: `backend`.
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://xhqkjmxuzcjlyfoushdr.supabase.co` |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase publishable/anon key |
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase secret key |
-| `CORS_ORIGINS` | `https://YOUR-VERCEL-DOMAIN.vercel.app` |
+| `CORS_ORIGINS` | `https://evalio-beta.vercel.app` (your exact Vercel URL, no trailing slash) |
+| `NEXT_PUBLIC_APP_URL` | Same Vercel URL (also used as CORS fallback) |
+| `CORS_ALLOW_VERCEL_PREVIEWS` | `true` optional: allow any `*.vercel.app` preview |
 | `MAX_STUDENT_SHEETS` | `5` |
+
+**CORS error fix:** If the browser says `blocked by CORS policy`, `CORS_ORIGINS` on Render must match your live Vercel URL exactly, e.g. `https://evalio-beta.vercel.app`. Then **Manual Deploy** on Render.
 
 Student PDFs and marking keys are processed on Render with **pdfplumber** (text extraction only).
 
@@ -38,8 +42,8 @@ Root directory: **`frontend`**
 |----------|--------|
 | `NEXT_PUBLIC_SUPABASE_URL` | Same as Supabase project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Same anon key |
-| `NEXT_PUBLIC_API_URL` | Your **Render** API URL (no trailing slash) |
-| `NEXT_PUBLIC_APP_URL` | Your Vercel URL |
+| `NEXT_PUBLIC_API_URL` | `https://evalio-viky.onrender.com` (no trailing slash) |
+| `NEXT_PUBLIC_APP_URL` | `https://evalio-beta.vercel.app` |
 | `CONTACT_NOTIFY_EMAIL` | `msalmansaleem08@gmail.com` |
 | `RESEND_API_KEY` | Resend API key |
 | `RESEND_FROM_EMAIL` | `Evalio <onboarding@resend.dev>` |
