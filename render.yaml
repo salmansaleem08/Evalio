@@ -14,5 +14,9 @@ services:
         sync: false
       - key: NEXT_PUBLIC_SUPABASE_URL
         sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
       - key: CORS_ORIGINS
         sync: false
+      - key: MAX_STUDENT_SHEETS
+        value: "5"

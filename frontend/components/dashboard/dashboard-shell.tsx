@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { FilePlus, LayoutDashboard, LogOut } from "lucide-react";
+import { FilePlus, LayoutDashboard } from "lucide-react";
 
-import { signOutAction } from "@/app/actions/auth";
+import { SignOutButton } from "@/components/dashboard/sign-out-button";
 import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -18,12 +18,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         <Logo size="sm" />
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <form action={signOutAction}>
-            <Button type="submit" variant="ghost" size="sm" className="gap-2">
-              <LogOut className="size-4" />
-              <span className="hidden sm:inline">Sign out</span>
-            </Button>
-          </form>
+          <SignOutButton />
         </div>
       </header>
 

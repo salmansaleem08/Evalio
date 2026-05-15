@@ -1,33 +1,89 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Loader2 } from "lucide-react";
 
-import { signUpAction, type AuthActionState } from "@/app/actions/auth";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/ui/password-input";
-
-const initialState: AuthActionState = {};
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export function SignupForm() {
-  const [state, formAction, pending] = useActionState(signUpAction, initialState);
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    setPending(true);
+
+    const form = new FormData(e.currentTarget);
+    const email = String(form.get("email") ?? "").trim();
+    const password = String(form.get("password") ?? "");
+
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters.");
+      setPending(false);
+      return;
+    }
+
+    try {
+      const pilotRes = await fetch("/api/pilot/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const pilot = await pilotRes.json();
+      if (!pilot.allowed) {
+        setError(
+          "Early access is limited to invited pilot institutions. Request access from the homepage.",
+        );
+        return;
+      }
+
+      const supabase = getSupabaseBrowserClient();
+      const { error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      if (signUpError) {
+        setError(signUpError.message);
+        return;
+      }
+
+      await fetch("/api/notify/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      }).catch(() => undefined);
+
+      router.refresh();
+      router.push("/dashboard");
+    } catch {
+      setError("Could not create account. Please try again.");
+    } finally {
+      setPending(false);
+    }
+  }
 
   return (
-    <form action={formAction} className="flex w-full max-w-md flex-col gap-5">
+    <form onSubmit={handleSubmit} className="flex w-full max-w-md flex-col gap-5">
       <header className="space-y-2">
         <h1 className="text-2xl font-bold tracking-tight">Create your account</h1>
         <p className="text-muted-foreground">
-          Sign up with your school email. Pilot access for invited schools only.
+          Email sign-up for invited schools, colleges, and universities.
         </p>
       </header>
 
-      {state.error && (
+      {error && (
         <Alert variant="destructive">
-          <AlertDescription>{state.error}</AlertDescription>
+          <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
 

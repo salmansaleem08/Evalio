@@ -1,5 +1,5 @@
 import { env } from "@/lib/env";
-import { createBrowserClient } from "@/lib/supabase/client";
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export class ApiError extends Error {
   constructor(
@@ -11,11 +11,16 @@ export class ApiError extends Error {
 }
 
 async function getAccessToken(): Promise<string | null> {
-  const supabase = createBrowserClient();
+  const supabase = getSupabaseBrowserClient();
   const {
     data: { session },
+    error,
   } = await supabase.auth.getSession();
-  return session?.access_token ?? null;
+
+  if (error || !session?.access_token) {
+    return null;
+  }
+  return session.access_token;
 }
 
 export async function apiFetch<T>(
@@ -24,7 +29,7 @@ export async function apiFetch<T>(
 ): Promise<T> {
   const token = await getAccessToken();
   if (!token) {
-    throw new ApiError("Not signed in", 401);
+    throw new ApiError("Not signed in. Please sign in again.", 401);
   }
 
   const headers = new Headers(options.headers);
@@ -33,6 +38,7 @@ export async function apiFetch<T>(
   const response = await fetch(`${env.apiUrl}${path}`, {
     ...options,
     headers,
+    credentials: "include",
   });
 
   const data = await response.json().catch(() => ({}));
@@ -53,13 +59,14 @@ export async function apiUpload<T>(
 ): Promise<T> {
   const token = await getAccessToken();
   if (!token) {
-    throw new ApiError("Not signed in", 401);
+    throw new ApiError("Not signed in. Please sign in again.", 401);
   }
 
   const response = await fetch(`${env.apiUrl}${path}`, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },
     body: formData,
+    credentials: "include",
   });
 
   const data = await response.json().catch(() => ({}));

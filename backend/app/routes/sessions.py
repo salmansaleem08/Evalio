@@ -123,11 +123,11 @@ async def upload_papers(
         if not upload.filename or not upload.filename.lower().endswith(".pdf"):
             raise HTTPException(status_code=400, detail="Only PDF files are accepted")
         content = await upload.read()
-        text = extract_text_from_pdf(content)
+        text = extract_text_from_pdf(content, upload.filename or "student.pdf")
         if not text:
             raise HTTPException(
                 status_code=400,
-                detail=f"Could not extract text from {upload.filename}",
+                detail=f"Could not extract text from {upload.filename}. Use a text-based PDF.",
             )
         label = upload.filename.replace(".pdf", "").replace(".PDF", "")
         row = (
@@ -159,9 +159,12 @@ async def upload_marking_key(
         raise HTTPException(status_code=400, detail="Marking key must be a PDF")
 
     content = await file.read()
-    text = extract_text_from_pdf(content)
+    text = extract_text_from_pdf(content, file.filename or "marking-key.pdf")
     if not text:
-        raise HTTPException(status_code=400, detail="Could not extract text from marking key")
+        raise HTTPException(
+            status_code=400,
+            detail="Could not extract text from marking key. Use a text-based PDF.",
+        )
 
     sb = get_supabase()
     row = (

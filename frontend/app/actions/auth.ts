@@ -55,30 +55,6 @@ export async function signUpAction(
   redirect("/login?registered=1");
 }
 
-export async function signInAction(
-  _prev: AuthActionState,
-  formData: FormData,
-): Promise<AuthActionState> {
-  const email = String(formData.get("email") ?? "").trim();
-  const password = String(formData.get("password") ?? "");
-
-  if (!email || !password) {
-    return { error: "Email and password are required." };
-  }
-
-  const supabase = await createServerSupabaseClient();
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-
-  if (error) {
-    return { error: error.message };
-  }
-
-  redirect("/dashboard");
-}
-
 export async function signOutAction() {
   const supabase = await createServerSupabaseClient();
   await supabase.auth.signOut();

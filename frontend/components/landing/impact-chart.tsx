@@ -1,19 +1,27 @@
 "use client";
 
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import dynamic from "next/dynamic";
 
-const data = [
-  { label: "Manual marking", hours: 120, fill: "oklch(0.55 0 0)" },
-  { label: "With Evalio", hours: 12, fill: "#00b67b" },
-];
+const ImpactChartInner = dynamic(
+  () =>
+    import("@/components/landing/impact-chart-inner").then(
+      (m) => m.ImpactChartInner,
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <ChartLoadingPlaceholder />
+    ),
+  },
+);
+
+function ChartLoadingPlaceholder() {
+  return (
+    <div className="flex h-[280px] w-full items-center justify-center rounded-lg bg-muted/30 text-sm text-muted-foreground">
+      Loading chart…
+    </div>
+  );
+}
 
 export function ImpactChart() {
   return (
@@ -27,7 +35,7 @@ export function ImpactChart() {
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               Hours back for your faculty every season
             </h2>
-            <p className="mt-4 text-muted-foreground leading-relaxed">
+            <p className="mt-4 leading-relaxed text-muted-foreground">
               Schools, colleges, and universities typically spend weeks on a single
               exam cycle. Evalio compresses that workload so staff can return papers
               faster and focus on teaching.
@@ -43,49 +51,10 @@ export function ImpactChart() {
             <p className="mb-4 text-center text-sm font-medium text-muted-foreground">
               Staff hours per exam cycle (illustrative)
             </p>
-            <ChartBlock />
+            <ImpactChartInner />
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function ChartBlock() {
-  return (
-    <div className="h-[280px] w-full">
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-          <XAxis
-            dataKey="label"
-            tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
-            axisLine={false}
-            tickLine={false}
-          />
-          <YAxis
-            tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
-            axisLine={false}
-            tickLine={false}
-            label={{
-              value: "Hours",
-              angle: -90,
-              position: "insideLeft",
-              fill: "var(--muted-foreground)",
-              fontSize: 12,
-            }}
-          />
-          <Tooltip
-            contentStyle={{
-              background: "var(--card)",
-              border: "1px solid var(--border)",
-              borderRadius: "8px",
-            }}
-            labelStyle={{ color: "var(--foreground)" }}
-          />
-          <Bar dataKey="hours" radius={[8, 8, 0, 0]} />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
   );
 }

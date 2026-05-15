@@ -1,26 +1,59 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { Loader2 } from "lucide-react";
 
-import { signInAction, type AuthActionState } from "@/app/actions/auth";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/ui/password-input";
-
-const initialState: AuthActionState = {};
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export function LoginForm() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const registered = searchParams.get("registered") === "1";
-  const [state, formAction, pending] = useActionState(signInAction, initialState);
+  const next = searchParams.get("next") ?? "/dashboard";
+
+  const [error, setError] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    setPending(true);
+
+    const form = new FormData(e.currentTarget);
+    const email = String(form.get("email") ?? "").trim();
+    const password = String(form.get("password") ?? "");
+
+    try {
+      const supabase = getSupabaseBrowserClient();
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (signInError) {
+        setError(signInError.message);
+        return;
+      }
+
+      // Sync cookies for middleware + server components (Vercel)
+      router.refresh();
+      router.push(next);
+    } catch {
+      setError("Could not sign in. Please try again.");
+    } finally {
+      setPending(false);
+    }
+  }
 
   return (
-    <form action={formAction} className="flex w-full max-w-md flex-col gap-5">
+    <form onSubmit={handleSubmit} className="flex w-full max-w-md flex-col gap-5">
       <header className="space-y-2">
         <h1 className="text-2xl font-bold tracking-tight">Welcome back</h1>
         <p className="text-muted-foreground">
@@ -36,9 +69,9 @@ export function LoginForm() {
         </Alert>
       )}
 
-      {state.error && (
+      {error && (
         <Alert variant="destructive">
-          <AlertDescription>{state.error}</AlertDescription>
+          <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
 
